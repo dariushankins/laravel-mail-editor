@@ -20,9 +20,9 @@
         "markdown"
     ],
     "require": {
-        "illuminate/support": "^9.0|^10.0",
-        "reecem/mocker": "^1.1",
-        "laravel/legacy-factories": "^1.3"
+        "illuminate/support": "^9.0|^10.0|^11.0",
+        "reecem/mocker": "^1.2.1",
+        "laravel/legacy-factories": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.10",
