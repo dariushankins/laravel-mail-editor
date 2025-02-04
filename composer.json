@@ -21,9 +21,15 @@
     ],
     "require": {
         "illuminate/support": "^9.0|^10.0|^11.0",
-        "reecem/mocker": "^1.2.1",
+        "reecem/mocker": "dev-arbitrage",
         "laravel/legacy-factories": "^1.4"
     },
+     "repositories": [
+        {
+        "type": "vcs",
+        "url": "https://github.com/dariushankins/mocker"
+        }
+    ],
     "require-dev": {
         "phpunit/phpunit": "^9.5.10",
         "mockery/mockery": "^1.4.4",
