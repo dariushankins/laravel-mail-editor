@@ -20,7 +20,7 @@
         "markdown"
     ],
     "require": {
-        "illuminate/support": "^9.0|^10.0|^11.0",
+        "illuminate/support": "^v12.30.1",
         "reecem/mocker": "dev-arbitrage",
         "laravel/legacy-factories": "^1.4"
     },
