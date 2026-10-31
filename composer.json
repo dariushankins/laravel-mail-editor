@@ -1,15 +1,15 @@
 {
-    "name": "qoraiche/laravel-mail-editor",
+    "name": "dariushankins/laravel-mail-editor",
     "description": "Modern Laravel mail editor with Laravel 12/13 and PHP 8.4+ support",
     "license": "MIT",
     "authors": [
         {
-            "name": "yassine qoraiche",
-            "email": "qoraicheofficiel@hotmail.com",
-            "homepage": "https://github.com/qoraiche"
+            "name": "Darius Hankins",
+            "email": "info@arbitragetrade.com",
+            "homepage": "https://github.com/dariushankins"
         }
     ],
-    "homepage": "https://github.com/Qoraiche/laravel-mail-editor",
+    "homepage": "https://github.com/dariushankins/laravel-mail-editor",
     "keywords": [
         "Laravel",
         "mailEclipse",
@@ -38,21 +38,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Qoraiche\\MailEclipse\\": "src/"
+            "Dariushankins\\MailEclipse\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Qoraiche\\MailEclipse\\Tests\\": "tests"
+            "Dariushankins\\MailEclipse\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Qoraiche\\MailEclipse\\MailEclipseServiceProvider"
+                "Dariushankins\\MailEclipse\\MailEclipseServiceProvider"
             ],
             "aliases": {
-                "MailEclipse": "Qoraiche\\MailEclipse\\Facades\\MailEclipse"
+                "MailEclipse": "Dariushankins\\MailEclipse\\Facades\\MailEclipse"
             }
         }
     },
