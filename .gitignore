@@ -12,3 +12,7 @@ resources/views/draft/*
 !resources/views/templates/.gitkeep
 
 docs/node_modules
+
+.phpunit.cache/
+
+tests/Fixtures/Mail/templates.json

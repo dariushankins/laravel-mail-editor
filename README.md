@@ -1,133 +1,91 @@
-<h6 align="center">
-    <img src="https://i.imgur.com/QpAJLql.png" width="150"/>
-</h6>
+# MailEclipse — Laravel Mail Editor
 
-<h2 align="center">
-    Laravel Mail Editor (Aka MailEclipse)
-</h2>
+A modern email workspace for **Laravel 12 and 13**, with **PHP 8.4 or newer**. This is a modernization of [Yassine Qoraiche's MailEclipse](https://github.com/Qoraiche/laravel-mail-editor), retaining its PHP namespace, configuration keys, facade, and named routes.
 
-<p align="center">
-<a href="https://packagist.org/packages/qoraiche/laravel-mail-editor" alt="sponsors on Open Collective"><img src="https://poser.pugx.org/qoraiche/laravel-mail-editor/v/stable" /></a> <a href="https://packagist.org/packages/qoraiche/laravel-mail-editor" alt="Sponsors on Open Collective"><img src="https://poser.pugx.org/qoraiche/laravel-mail-editor/license" /></a> 
-<a href="https://packagist.org/packages/qoraiche/laravel-mail-editor" alt="Sponsors on Open Collective"><img src="https://poser.pugx.org/qoraiche/laravel-mail-editor/downloads" /></a> 
-</p>
-<br/><br/>
+## What's new
 
-MailEclipse is a mailable editor package for your Laravel applications to create and manage mailables using a web UI. You can use this package to develop mailables without using the command line, and edit templates associated with mailables using a WYSIWYG editor, among other features.
+- Responsive Bootstrap 5 workspace with persistent light, dark, and system appearance.
+- Search mailables and saved templates by name or content.
+- Locally hosted HTML, Markdown, and plain text editors; no runtime CDN dependencies.
+- Modern `envelope()` / `content()` mailables alongside legacy `build()` mailables.
+- Modern Eloquent factories and configurable preview constructor data.
+- Test sends redirect all recipients, including envelope/callback recipients, without changing the host application's mailer.
+- Per-item validation: bad templates are flagged, diagnostics and repair remain accessible, and corrupt template indexes never take down the workspace or get silently overwritten.
+- Private, temporary draft views; sandboxed email previews; application-view write boundaries.
+- Composer/PHPUnit and browser regression tests, with CI for PHP 8.4/8.5 and Laravel 12/13.
 
-## Project Archived
+## Install this fork
 
-### Important Notice
+Until a release is published on Packagist, add this fork as a Composer VCS repository. Keep the original package name so Laravel discovery and existing integrations continue to work.
 
-As of **06/03/2024**, this project has been archived and is no longer actively maintained. Thank you to everyone who contributed, used, and supported this project throughout its lifecycle.
-
-### Reason for Archiving
-
-I am unable to dedicate the necessary time to maintain this project.
-
-If you think you can continue to contribute to Maileclipse, please get in touch with me at: qoraicheofficiel[at]hotmail[dot]com
-
-### Accessing the Archived Project
-
-You can still browse the source code, issues, and pull requests in a read-only state. Feel free to fork the repository if you wish to continue development independently.
-
-### Acknowledgements
-
-I would like to extend my heartfelt thanks to all contributors, users, and community members who have supported this project. Your contributions have been invaluable.
-
-Thank you for your understanding and support.
-
-Yassine Qoraiche
-
----
-
-## Features
-
-* Create mailables without using command line.
-* Preview/Edit all your mailables at a single place.
-* Templates (more than 20+ ready to use email templates).
-* WYSIWYG Email HTML/Markdown editor.
-* Suitable for laravel beginners.
-* Send Test mails
-* Testing mails with fake data
-
-## Requirements
-
-| Laravel Version | Compatible version |
-|-----------------|--------------------|
-| 9               | Latest - [v4.x](https://github.com/Qoraiche/laravel-mail-editor/tree/v4.0.0)|
-| 8               | [v3.x](https://github.com/Qoraiche/laravel-mail-editor/tree/3.x)               |
-| 5.6 -> 7        | [v2.x](https://github.com/Qoraiche/laravel-mail-editor/tree/2.x)               |
-
-## Installation
-
-Via Composer
-
-``` bash
-composer require qoraiche/laravel-mail-editor
+```json
+{
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/dariushankins/laravel-mail-editor" }
+    ]
+}
 ```
 
-The package will automatically register itself.
-
-Publish configuration file and public assets:
-
-``` bash
+```bash
+composer require qoraiche/laravel-mail-editor:dev-modernize-laravel-13
 php artisan laravel-mail-editor:install
 ```
 
+Open `/maileclipse`. Node is needed only to change and rebuild frontend assets, not to install the package. The compiled assets are included in the repository.
 
-## Change log
+On upgrade, refresh the published assets:
 
-Please see the [changelog](changelog.md) for more information on what has changed recently.
+```bash
+php artisan vendor:publish --tag=maileclipse.assets --force
+php artisan view:clear
+```
 
-## Security
+If you have published custom package views, reconcile them with the new Bootstrap 5 views before upgrading. Existing application mailables and saved template Blade files remain in place.
 
-If you discover any security related issues, please email author email [qoraicheofficiel@hotmail.com](mailto:qoraicheofficiel@hotmail.com) instead of using the issue tracker.
+## Configure
 
-## License
+Publish `config/maileclipse.php` with the install command. The default allowed environments are local, development, staging, and testing. The editor can change executable Blade/PHP files: only enable it for trusted developers. If enabling it in a shared environment, configure authentication and an authorization middleware in `maileclipse.middlewares`.
 
-MIT license. Please see the [license file](LICENSE) for more information.
+Constructor defaults, including `0`, `false`, and empty strings, are preserved. Required scalar arguments get example values. Nullable arguments use `null`, enums use their first case, and Eloquent models use modern `HasFactory::factory()->make()` without saving records. Custom factory callbacks and mailable constructors are application code and may have their own side effects. No legacy global factories or automatic relationship queries are used; provide complex preview graphs explicitly:
 
-## Screenshots
+```php
+'preview_data' => [
+    App\Mail\InvoiceMail::class => [
+        'invoice' => new App\Models\Invoice(['number' => 'DEMO-001']),
+        'count' => 0,
+        'enabled' => false,
+    ],
+],
+```
 
-![maileclipse-new-mailable](https://i.imgur.com/AiMEtY0.png)
+Unresolvable interfaces and intersection types need explicit preview data. Container bindings can resolve application services. The original `factory` toggle remains available; when false, model arguments use empty unsaved model instances. Retired legacy `relations` options are ignored.
 
-![maileclipse-templates](https://i.imgur.com/siqxWVa.png)
+## Editors and licenses
 
-![maileclipse-templates-create](https://i.imgur.com/8OQrEIS.png)
+PHP code remains MIT, with the original copyright retained in [LICENSE](LICENSE). Browser libraries keep their upstream licenses in `public/licenses`.
+
+The HTML editor uses self-hosted **TinyMCE 8**, defaulting to its GPL license option. Review the upstream TinyMCE license for your distribution/use; a commercial key can be configured with `MAILECLIPSE_EDITOR_LICENSE_KEY`. TinyMCE is loaded only on editor pages. Full HTML documents retain their document head and body attributes when editing body content; edit complex document structure in the Blade source as needed. Markdown editing uses EasyMDE, and plain text editing uses CodeMirror.
+
+## Development
+
+Requirements: PHP 8.4+, Composer 2, Node 22+.
+
+```bash
+composer update
+composer test
+composer lint
+npm ci
+npm run build
+npx playwright install chromium
+npm test
+```
+
+Browser tests start an isolated local Testbench app and use a temporary filesystem. `PHP_BINARY` and `CHROMIUM_PATH` can select alternate binaries. `SCREENSHOT_DIR` optionally saves browser QA screenshots. Preview validation runs with the configured sample data; an error can indicate missing preview data as well as a broken template. Existing invalid templates remain editable, and new syntax-invalid saves are rejected before writing.
+
+Test mail uses Laravel's array transport; no external email is sent.
+
+Laravel 9/10 and PHP 8.3 and older should continue using the appropriate upstream version. This branch is a major upgrade; test it in development before updating an application.
 
 ## Credits
 
-- [Yassine Qoraiche](https://github.com/qoraiche)
-- [All Contributors](../../contributors)
-
-## Donate :heart:
-
-If you benefit from and/or like using MailEclipse then please help drive the future development of the project by 
-
-* [Donating today](https://www.paypal.me/streamaps)!.
-* Star the project :star:.
-
-### Donors list:
-
-1. **conschneider.de** - (20,00 $) - `Thank You!` - 3 November 2020
-2. **Emprovise** - (20,00 $) - `You did a great job on MailEclipse! Thank you for providing this to everyone for free. I look forward to watching your project grow! Thanks Again, James S.` - 19 December 2019
-3. **Idearia Web Agency** - (40,00 €) - `Keep up the good work!` - 19 June 2019
-4. **Snapt Systems Ltd** - (100,00 $ USD) - `Being used by one of our teams at Snapt!` - 11 April 2019
-5. **Corr Ex** - (2,00 $ USD) - 28 March 2019
-6. **WebArt Design** - (10,00 $ USD) - `Donation made with love by BuiltByPanda. com from Australia who support developers and their excellent work` - 28 March 2019
-7. **Flavius Borlovan** (6,99 $ USD) - `#teamcookie says HELLOO 🥳😉 Thanks for this really helpful Package (MailEclipse) bro. 😉💪🏽` - 12 March 2019
-8. **Maik Kasper** - (6,99 $ USD) - `We {teamcookie:github. com/flavius-constantin} 💥 love to support good developers and their awesome work! 🌪🔥` - 13 March 2019
-
-## Sponsors
-
-<table>
-  <tbody>
-    <tr>
-          <td align="center" valign="middle">
-            <a href="https://www.jetbrains.com/?from=maileclipse" target="_blank">
-              <img width="222px" src="https://user-images.githubusercontent.com/15586492/96636404-2c18dd00-1315-11eb-9520-736dffaaf0a7.png">
-            </a>
-          </td>
-        </tr>
-  </tbody>
-</table>
+Originally created by [Yassine Qoraiche](https://github.com/Qoraiche), with contributions from the upstream community.

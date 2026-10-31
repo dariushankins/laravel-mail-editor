@@ -1,3 +1,12 @@
+# 5.0.0 (unreleased fork)
+
+- Require PHP 8.4+ and Laravel 12/13.
+- Replace legacy factories and reflection argument handling with modern preview resolution.
+- Support envelope/content mailables, isolated draft views, safe test recipients, and bounded view writes.
+- Introduce a responsive Bootstrap 5 workspace, light/dark/system themes, search, and self-hosted editors.
+- Replace Gulp/Node Sass with a reproducible Node build, modern test dependencies, and CI.
+- Preserve upstream namespace, facade, routes, and existing saved template format.
+
 # Changelog
 
 All notable changes to `laravel-mail-editor` will be documented in this file.

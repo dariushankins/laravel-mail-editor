@@ -25,7 +25,7 @@ class TemplatesController extends Controller
 
         $templates = MailEclipse::getTemplates();
 
-        return View(MailEclipse::VIEW_NAMESPACE.'::sections.templates', compact('skeletons', 'templates'));
+        return View(MailEclipse::VIEW_NAMESPACE.'::sections.templates', ['skeletons' => $skeletons, 'templates' => $templates, 'templateIndexError' => \Qoraiche\MailEclipse\MailEclipse::$templateIndexError]);
     }
 
     public function new($type, $name, $skeleton)
@@ -45,7 +45,7 @@ class TemplatesController extends Controller
             return redirect()->route('templateList');
         }
 
-        return View(MailEclipse::VIEW_NAMESPACE.'::sections.edit-template', compact('template'));
+        return View(MailEclipse::VIEW_NAMESPACE.'::sections.'.($template->get('missing') ? 'invalid-template' : 'edit-template'), compact('template'));
     }
 
     public function create(Request $request)

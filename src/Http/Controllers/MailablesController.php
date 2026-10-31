@@ -47,7 +47,9 @@ class MailablesController extends Controller
 
         $resource = $mailable->first();
 
-        return view(MailEclipse::VIEW_NAMESPACE.'::sections.view-mailable')->with(compact('resource'));
+        $view = $resource['status'] === 'invalid' ? 'invalid-mailable' : 'view-mailable';
+
+        return view(MailEclipse::VIEW_NAMESPACE.'::sections.'.$view)->with(compact('resource'));
     }
 
     public function editMailable($name)
@@ -63,9 +65,10 @@ class MailablesController extends Controller
 
     public function parseTemplate(Request $request)
     {
-        $template = $request->has('template') ? $request->template : false;
+        $request->validate(['markdown' => 'required|string', 'viewpath' => 'required|string', 'template' => 'sometimes|boolean']);
+        $template = $request->boolean('template');
 
-        $viewPath = $request->has('template') ? $request->viewpath : base64_decode($request->viewpath);
+        $viewPath = $template ? $request->viewpath : base64_decode($request->viewpath, true);
 
         // ref https://regexr.com/4dflu
         $bladeRenderable = preg_replace('/((?!{{.*?-)(&gt;)(?=.*?}}))/', '>', $request->markdown);
@@ -93,19 +96,9 @@ class MailablesController extends Controller
 
     public function delete(Request $request)
     {
-        $mailableFile = config('maileclipse.mailables_dir').'/'.$request->mailablename.'.php';
+        $request->validate(['mailablename' => ['required', 'string', 'regex:/^[A-Za-z_][A-Za-z0-9_]*$/']]);
 
-        if (file_exists($mailableFile)) {
-            unlink($mailableFile);
-
-            return response()->json([
-                'status' => 'ok',
-            ]);
-        }
-
-        return response()->json([
-            'status' => 'error',
-        ]);
+        return response()->json((new \Qoraiche\MailEclipse\Actions\DeleteMailable)->handle($request->only('mailablename')));
     }
 
     public function sendTest(Request $request)
@@ -118,5 +111,7 @@ class MailablesController extends Controller
         $email = $request->get('email') ?? config('maileclipse.test_mail');
 
         MailEclipse::sendTest($request->get('name'), $email);
+
+        return response()->json(['status' => 'ok']);
     }
 }

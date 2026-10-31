@@ -6,7 +6,7 @@
 
 <div class="col-lg-10 col-md-12">
 
-	<nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('mailableList') }}">Mailables</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $resource['name'] }}</li>
@@ -48,51 +48,51 @@
 
 
                                 @if ( !empty($resource['data']->locale) )
-				    				<tr>
-	                                    <td class="table-fit font-weight-sixhundred">Locale</td>
-	                                    <td>
-	                                        {{ $resource['data']->locale }}
-	                                    </td>
-                                	</tr>
-				    			@endif
+                                    <tr>
+                                        <td class="table-fit font-weight-sixhundred">Locale</td>
+                                        <td>
+                                            {{ $resource['data']->locale }}
+                                        </td>
+                                    </tr>
+                                @endif
 
-				    				<tr>
-	                                    <td class="table-fit font-weight-sixhundred">From</td>
-	                                    <td><a href="mailto:{{ !collect($resource['data']->from)->isEmpty() ? collect($resource['data']->from)->first()['address'] : config('mail.from.address') }}" class="badge badge-info mr-1 font-weight-light">
-	                                    	@if (!collect($resource['data']->from)->isEmpty())
+                                    <tr>
+                                        <td class="table-fit font-weight-sixhundred">From</td>
+                                        <td><a href="mailto:{{ !collect($resource['data']->from)->isEmpty() ? collect($resource['data']->from)->first()['address'] : config('mail.from.address') }}" class="badge badge-info me-1 font-weight-light">
+                                            @if (!collect($resource['data']->from)->isEmpty())
 
-                            					{{ collect($resource['data']->from)->first()['address'] }}
+                                                {{ collect($resource['data']->from)->first()['address'] }}
 
-                            					@else
+                                                @else
 
-												{{ config('mail.from.address') }} (default)
+                                                {{ config('mail.from.address') }} (default)
 
-                            				@endif
-                        				</a></td>
-                                	</tr>
+                                            @endif
+                                        </a></td>
+                                    </tr>
 
-                                	<tr>
-	                                    <td class="table-fit font-weight-sixhundred">Reply To</td>
-	                                    <td><a href="mailto:{{ !collect($resource['data']->replyTo)->isEmpty() ? collect($resource['data']->replyTo)->first()['address'] : config('mail.reply_to.address') }}" class="badge badge-info mr-1 font-weight-light">
-	                                    	@if (!collect($resource['data']->replyTo)->isEmpty())
+                                    <tr>
+                                        <td class="table-fit font-weight-sixhundred">Reply To</td>
+                                        <td><a href="mailto:{{ !collect($resource['data']->replyTo)->isEmpty() ? collect($resource['data']->replyTo)->first()['address'] : config('mail.reply_to.address') }}" class="badge badge-info me-1 font-weight-light">
+                                            @if (!collect($resource['data']->replyTo)->isEmpty())
 
-                            					{{ collect($resource['data']->replyTo)->first()['address'] }}
+                                                {{ collect($resource['data']->replyTo)->first()['address'] }}
 
-                            					@else
+                                                @else
 
-												{{ config('mail.reply_to.address') }} (default)
+                                                {{ config('mail.reply_to.address') }} (default)
 
-                            				@endif
-                        				</a></td>
+                                            @endif
+                                        </a></td>
 
-                                	</tr>
+                                    </tr>
 
                                 @if ( !empty($resource['data']->cc) )
                                 <tr>
                                     <td class="table-fit font-weight-sixhundred">cc</td>
                                     <td>
-                                    	@foreach( $resource['data']->cc as $cc )
-                                        <a href="mailto:{{ $cc['address'] }}" class="badge badge-info mr-1 font-weight-light">{{ $cc['address'] }}</a>
+                                        @foreach( $resource['data']->cc as $cc )
+                                        <a href="mailto:{{ $cc['address'] }}" class="badge badge-info me-1 font-weight-light">{{ $cc['address'] }}</a>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -101,14 +101,14 @@
                                 <tr>
                                     <td class="table-fit font-weight-sixhundred">bcc</td>
                                     <td>
-                                    	@foreach( $resource['data']->bcc as $bcc )
-                                        <a href="mailto:{{ $bcc['address'] }}" class="badge badge-info mr-1 font-weight-light">{{ $bcc['address'] }}</a>
+                                        @foreach( $resource['data']->bcc as $bcc )
+                                        <a href="mailto:{{ $bcc['address'] }}" class="badge badge-info me-1 font-weight-light">{{ $bcc['address'] }}</a>
                                         @endforeach
                                     </td>
                                 </tr>
                                 @endif
                             </tbody>
-                        </table>
+                        </table></div>
                     </div>
                 </div>
 
@@ -127,9 +127,9 @@
                         </div>
 
                     </div>
-                    <div class="embed-responsive embed-responsive-16by9">
-					  <iframe class="embed-responsive-item" src="{{ route('previewMailable', [ 'name' => $resource['name'] ]) }}" allowfullscreen></iframe>
-					</div>
+                    <div class="ratio ratio-16x9">
+                      <iframe title="Mailable preview" sandbox="" class="embed-responsive-item" src="{{ route('previewMailable', [ 'name' => $resource['name'] ]) }}" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
                 })
 
                 .catch(function (error) {
-                    notie.alert({type: 'error', text: error, time: 4})
+                    notie.alert({type: 'error', text: error.response?.data?.message || error.message || String(error), time: 4})
                 });
         }
 

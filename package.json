@@ -1,34 +1,28 @@
 {
-  "name": "MailEclipse",
-  "version": "1.0",
-  "description": "Manage all the mailables in your laravel app at a single place",
-  "repository": "https://github.com/maileclipse/laravel-mail-editor",
-  "main": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "bootstrap",
-    "themes"
-  ],
-  "author": "Yassine Qoraiche",
+  "name": "maileclipse",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Self-hosted MailEclipse editor assets",
   "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/browser/*.test.mjs"
+  },
   "dependencies": {
-    "bootstrap": "^4.2.1",
-    "jquery": ">=3.4.0",
-    "popper.js": "^1.14.4"
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "axios": "^1.21.0",
+    "bootstrap": "^5.3.8",
+    "codemirror": "^5.65.20",
+    "easymde": "^2.21.0",
+    "jquery": "^3.7.1",
+    "notie": "^4.3.1",
+    "tinymce": "^8.10.1"
   },
   "devDependencies": {
-    "autoprefixer": "^9.1.5",
-    "browser-sync": "^2.27.10",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.10.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.1",
-    "gulp-scss-lint": "^0.7.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.1"
+    "playwright": "^1.64.1",
+    "sass": "^1.93.2"
   }
 }

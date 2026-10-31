@@ -1,16 +1,17 @@
 @extends('maileclipse::layout.app')
 
 @section('title', 'Mailables')
+@section('description', 'Every email, in one place. Preview content, fine-tune templates, and send a test before it goes out.')
 
 @section('content')
 
 <div class="col-lg-10 col-md-12">
 
                 <div class="card my-4">
-                    <div class="card-header d-flex align-items-center justify-content-between"><h5>{{ __('Mailables') }}</h5>
+                    <div class="card-header d-flex align-items-center justify-content-between"><h5>{{ __('Your mailables') }} <span class="text-muted ms-2">{{ $mailables->count() }}</span></h5>
 
                         @if (!$mailables->isEmpty())
-                            <a class="btn btn-primary" href="#newMailableModal" data-toggle="modal" data-target="#newMailableModal">{{ __('Add Mailable') }}</a>
+                            <a class="btn btn-primary" href="#newMailableModal" data-bs-toggle="modal" data-bs-target="#newMailableModal">{{ __('Add Mailable') }}</a>
                         @endif
                         <!-- Modal -->
                     </div>
@@ -19,7 +20,7 @@
 
                     @component('maileclipse::layout.emptydata')
 
-                        <span class="mt-4">{{ __("We didn't find anything - just empty space.") }}</span><button class="btn btn-primary mt-3" data-toggle="modal" data-target="#newMailableModal">{{ __('Add New Mailable') }}</button>
+                        <span class="mt-4">{{ __("We didn't find anything - just empty space.") }}</span><button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#newMailableModal">{{ __('Add New Mailable') }}</button>
 
                     @endcomponent
 
@@ -27,7 +28,7 @@
 
                     @if (!$mailables->isEmpty())
                     <!---->
-                    <table id="mailables_list" class="table table-responsive table-hover table-sm mb-0 penultimate-column-right">
+                    <div class="table-responsive"><table id="mailables_list" class="table table-hover table-sm mb-0 penultimate-column-right">
                         <thead>
                             <tr>
                                 <th scope="col">{{ __('Name') }}</th>
@@ -39,15 +40,19 @@
                         <tbody>
                         @foreach($mailables->all() as $mailable)
                             <tr id="mailable_item_{{ $mailable['name'] }}">
-                                <td class="pr-0">
+                                <td class="pe-0">
                                     {{ $mailable['name'] }}
+                                    @if($mailable['status'] === 'invalid')
+                                        <span class="badge me-bad-badge ms-2">{{ __('Bad template') }}</span>
+                                        <div class="small text-danger fw-normal">{{ \Illuminate\Support\Str::limit($mailable['error'], 110) }}</div>
+                                    @endif
                                 </td>
                                 <td class="text-muted" title="{{ $mailable['namespace'] }}">{{ config('maileclipse.display_as_subject') ? $mailable['subject'] : $mailable['namespace'] }}</td>
 
                                 <td class="table-fit"><span>{{ (\Carbon\Carbon::createFromTimeStamp($mailable['modified']))->diffForHumans() }}</span></td>
 
                                 <td class="table-fit">
-                                    <a href="{{ route('viewMailable', ['name' => $mailable['name']]) }}" class="table-action mr-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16"><path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+                                    <a href="{{ route('viewMailable', ['name' => $mailable['name']]) }}" class="table-action me-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16"><path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
                                     </a>
 
                                     <a href="#" class="table-action remove-item" data-mailable-name="{{ $mailable['name'] }}">
@@ -59,7 +64,7 @@
                             </tr>
                         @endforeach
                         </tbody>
-                    </table>
+                    </table></div>
                     @endif
                 </div>
 
@@ -70,7 +75,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New Mailable</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -100,10 +105,9 @@
                 <small class="form-text text-muted">Force mailable creation even if already exists</small>
             </label>
         </div>
-        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Create Mailable</button>
       </div>
     </div>
@@ -166,7 +170,7 @@
         }
     })
     .catch(function (error) {
-        notie.alert({ type: 'error', text: error, time: 2 })
+        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
     });
 
   }
@@ -197,7 +201,7 @@
         .then(function (response) {
             if (response.data.status == 'ok')
             {
-                $('#newMailableModal').modal('toggle');
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('newMailableModal')).hide();
                 notie.alert({ type: 1, text: response.data.message, time: 3 });
 
                 setTimeout(function(){ location.reload(); }, 1000);
@@ -208,7 +212,7 @@
         })
 
     .catch(function (error) {
-        notie.alert({ type: 'error', text: error, time: 2 })
+        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
     });
 
     });

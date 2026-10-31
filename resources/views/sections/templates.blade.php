@@ -1,23 +1,27 @@
 @extends('maileclipse::layout.app')
 
-@section('title', 'Templates')
+@section('title', 'Template library')
+@section('description', 'A good email starts with a good foundation. Build your own or make a ready-to-use design yours.')
 
 @section('content')
 
 
 <div class="col-lg-10 col-md-12">
-  
+    @if($templateIndexError)
+        <div class="alert alert-danger" role="alert"><strong>{{ __('The template index could not be read') }}</strong><p class="mb-0">{{ $templateIndexError }} {{ __('Repair templates.json to restore the list. No data has been overwritten.') }}</p></div>
+    @endif
+
                 <div class="card my-4">
-                    <div class="card-header d-flex align-items-center justify-content-between"><h5>{{ __('Templates') }}</h5>
+                    <div class="card-header d-flex align-items-center justify-content-between"><h5>{{ __('Saved templates') }} <span class="text-muted ms-2">{{ $templates->count() }}</span></h5>
                         @if (!$templates->isEmpty())
                         <a href="{{ route('selectNewTemplate') }}" class="btn btn-primary">{{ __('Add Template') }}</a>
                         @endif
                     </div>
 
                     @if ($templates->isEmpty())
-                    
+
                     @component('maileclipse::layout.emptydata')
-                        
+
                         <span class="mt-4">{{ __("We didn't find anything - just empty space.") }}</span>
                         <a class="btn btn-primary mt-3" href="{{ route('selectNewTemplate') }}">{{ __('Add New Template') }}</a>
 
@@ -27,7 +31,7 @@
 
                     @if (!$templates->isEmpty())
                     <!---->
-                    <table id="templates_list" class="table table-responsive table-hover table-sm mb-0 penultimate-column-right">
+                    <div class="table-responsive"><table id="templates_list" class="table table-hover table-sm mb-0 penultimate-column-right">
                         <thead>
                             <tr>
                                 <th scope="col">{{ __('Name') }}</th>
@@ -42,7 +46,12 @@
                         <tbody>
                         @foreach($templates->all() as $template)
                             <tr id="template_item_{{ $template->template_slug }}">
-                                <td class="pr-0">{{ ucwords($template->template_name) }}</td>
+                                <td class="pe-0">{{ ucwords($template->template_name) }}
+                                    @if($template->status === 'invalid')
+                                        <span class="badge me-bad-badge ms-2">{{ __('Bad template') }}</span>
+                                        <div class="small text-danger fw-normal">{{ \Illuminate\Support\Str::limit($template->error, 110) }}</div>
+                                    @endif
+                                </td>
                                 <td class="text-muted" title="/tee">{{ $template->template_description }}</td>
 
                                 <td class="table-fit"><span>{{ ucfirst($template->template_view_name) }}</td>
@@ -53,7 +62,7 @@
                                 <td class="table-fit text-center"><span>{{ ucfirst($template->template_type) }}</td>
 
                                 <td class="table-fit">
-                                    <a href="{{ route('viewTemplate', [ 'templatename' => $template->template_slug ]) }}" class="table-action mr-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16"><path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+                                    <a href="{{ route('viewTemplate', [ 'templatename' => $template->template_slug ]) }}" class="table-action me-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16"><path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
                                     </a>
                                     <a href="#" class="table-action remove-item" data-template-slug="{{ $template->template_slug }}" data-template-name="{{ $template->template_name }}">
                                     <svg enable-background="new 0 0 268.476 268.476" version="1.1" viewBox="0 0 268.476 268.476" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" class="remove">
@@ -64,7 +73,7 @@
                             </tr>
                         @endforeach
                         </tbody>
-                    </table>
+                    </table></div>
                     @endif
                     <!---->
                 </div>
@@ -105,7 +114,7 @@
         }
     })
     .catch(function (error) {
-        notie.alert({ type: 'error', text: error, time: 2 })
+        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
     });
 
   }
@@ -114,7 +123,7 @@
     });
 
 
-                
+
 </script>
-   
+
 @endsection

@@ -13,15 +13,15 @@
         <li class="breadcrumb-item active" aria-current="page">Add Template</li>
       </ol>
     </nav>
-                
+
 
                 <div class="card mb-3">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-html-tab" data-toggle="pill" href="#pills-html" role="tab" aria-controls="pills-html" aria-selected="true">HTML</a>
+                            <a class="nav-link active" id="pills-html-tab" data-bs-toggle="pill" href="#pills-html" role="tab" aria-controls="pills-html" aria-selected="true">HTML</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-markdown-tab" data-toggle="pill" href="#pills-markdown" role="tab" aria-controls="pills-markdown" aria-selected="false">Markdown</a>
+                            <a class="nav-link" id="pills-markdown-tab" data-bs-toggle="pill" href="#pills-markdown" role="tab" aria-controls="pills-markdown" aria-selected="false">Markdown</a>
                         </li>
                     </ul>
                 </div>
@@ -35,7 +35,7 @@
 @foreach( $skeletons->get('html') as $name => $subskeleton )
 
 <div class="card">
-    <div class="content template-item" data-toggle="modal" data-target="#select{{ $name }}Modal">
+    <div role="button" tabindex="0" class="content template-item" data-bs-toggle="modal" data-bs-target="#select{{ $name }}Modal">
       <div class="content-overlay"></div>
 
       @if ( file_exists( public_path("vendor/maileclipse/images/skeletons/html/{$name}.png") ) )
@@ -62,13 +62,12 @@
 
 
 <!-- Modal -->
-@foreach($subskeleton as $skeleton)
     <div class="modal fade" id="select{{ $name }}Modal" tabindex="-1" role="dialog" aria-labelledby="selectTemplateModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="selectTemplateModalLabel">{{ ucfirst($name) }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -81,12 +80,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-@endforeach
     <!-- End modal -->
 
 @endforeach
@@ -100,7 +98,7 @@
                             @foreach( $skeletons->get('markdown') as $name => $subskeleton )
                                 <div class="card">
 <!-- <img class="card-img-top" src="https://1rj8i398ld62y6ih02fyvv4k-wpengine.netdna-ssl.com/wp-content/uploads/2018/12/mantra-welcome.png" alt="Card image cap"> -->
-    <div class="content template-item" data-toggle="modal" data-target="#{{ $name }}Modal">
+    <div role="button" tabindex="0" class="content template-item" data-bs-toggle="modal" data-bs-target="#{{ $name }}Modal">
       <div class="content-overlay"></div>
 
       @if ( file_exists( public_path("vendor/maileclipse/images/skeletons/markdown/{$name}.png") ) )
@@ -131,7 +129,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="selectTemplateModalLabel">{{ ucfirst($name) }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -144,7 +142,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -158,5 +156,5 @@
                 </div>
 </div>
             </div>
-   
+
 @endsection

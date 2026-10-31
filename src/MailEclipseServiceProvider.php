@@ -47,7 +47,6 @@ class MailEclipseServiceProvider extends ServiceProvider
     private function routeConfiguration()
     {
         return [
-            'namespace' => 'Qoraiche\MailEclipse\Http\Controllers',
             'prefix' => config('maileclipse.path'),
             'middleware' => 'maileclipse',
         ];
@@ -92,7 +91,7 @@ class MailEclipseServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/maileclipse'),
-        ], 'public');
+        ], ['public', 'maileclipse.assets']);
 
         $this->publishes([
             __DIR__.'/../resources/views/templates' => $this->app->resourcePath('views/vendor/maileclipse/templates'),

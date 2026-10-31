@@ -30,38 +30,10 @@ class MailablesPreviewController extends Controller
 
     public function mailable($name)
     {
-        $mailable = MailEclipse::getMailable('name', $name);
-
-        if ($mailable->isEmpty()) {
-            return redirect()->route('mailableList');
+        try {
+            return MailEclipse::renderMailable($name);
+        } catch (\Throwable $e) {
+            throw new PreviewErrorException($e);
         }
-
-        $resource = $mailable->first();
-
-        if (collect($resource['data'])->isEmpty()) {
-            return 'View not found';
-        }
-
-        $instance = MailEclipse::handleMailableViewDataArgs($resource['namespace']);
-
-        if (is_null($instance)) {
-            $instance = new $resource['namespace'];
-        }
-
-        $view = ! is_null($resource['markdown'])
-            ? $resource['markdown']
-            : $resource['data']->view;
-
-        if (view()->exists($view)) {
-            try {
-                $html = $instance;
-
-                return $html->render();
-            } catch (\ErrorException $e) {
-                throw new PreviewErrorException($e);
-            }
-        }
-
-        throw new PreviewErrorException(new \Exception('No template associated with this mailable.'));
     }
 }

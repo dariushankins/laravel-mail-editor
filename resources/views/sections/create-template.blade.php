@@ -5,7 +5,7 @@
 @section('content')
 
      <style type="text/css">
-         
+
         .CodeMirror {
             height: 400px;
         }
@@ -47,52 +47,54 @@
     </nav>
         <div class="container">
             <div class="row my-4">
-                
+
                 <div class="col-md-12">
 
                     <div class="card mb-2">
                         <div class="card-header p-3" style="border-bottom:1px solid #e7e7e7e6;">
-                            <button type="button" class="btn btn-primary float-right save-template">Create</button>
-                            <button type="button" class="btn btn-secondary float-right preview-toggle mr-2"><i class="far fa-eye"></i> Preview</button>
+                            <button type="button" class="btn btn-primary float-end save-template">Create</button>
+                            <button type="button" class="btn btn-secondary float-end preview-toggle me-2"><i class="far fa-eye"></i> Preview</button>
                         </div>
                     </div>
 
                     <div class="card">
-                    
+
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Editor</a>
+                        <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Editor</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Plain Text</a>
+                        <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Plain Text</a>
                       </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                       <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <textarea id="template_editor" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
+                        <textarea aria-label="Email template" id="template_editor" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
                       </div>
                       <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <textarea id="plain_text" cols="30" rows="10"></textarea>
+                        <textarea aria-label="Plain text email" id="plain_text" cols="30" rows="10"></textarea>
                       </div>
                     </div>
 
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
  </div>
 
 <script type="text/javascript">
 
-    
+
 $(document).ready(function(){
 
             @if ($skeleton['type'] === 'markdown')
-            
 
-            var simplemde = new SimpleMDE(
+
+            var simplemde = new EasyMDE(
                 {
                 element: $("#template_editor")[0],
+                autoDownloadFontAwesome: false,
+                spellChecker: false,
                 toolbar: [
                 {
                         name: "bold",
@@ -220,9 +222,9 @@ $(document).ready(function(){
                           method: "POST",
                           url: "{{ route('previewTemplateMarkdownView') }}",
                           data: { markdown: plainText, name: 'new' }
-                        
+
                     }).done(function( HtmledTemplate ) {
-                        preview.innerHTML = HtmledTemplate;
+                        MailEclipseEditor.preview(preview, HtmledTemplate);
                     });
 
                     return '';
@@ -242,7 +244,7 @@ $(document).ready(function(){
                 output = `
 [component]: # ('mail::button',  ['url' => '`+ link +`'])
 ` + text + `
-[endcomponent]: # 
+[endcomponent]: #
                 `;
                 cm.replaceSelection(output);
 
@@ -258,7 +260,7 @@ $(document).ready(function(){
                 output = `
 [component]: # ('mail::promotion')
 ` + text + `
-[endcomponent]: # 
+[endcomponent]: #
                 `;
                 cm.replaceSelection(output);
 
@@ -274,7 +276,7 @@ $(document).ready(function(){
                 output = `
 [component]: # ('mail::panel')
 ` + text + `
-[endcomponent]: # 
+[endcomponent]: #
                 `;
                 cm.replaceSelection(output);
 
@@ -292,7 +294,7 @@ $(document).ready(function(){
 | ------------- |:-------------:| --------:|
 | Col 2 is      | Centered      | $10      |
 | Col 3 is      | Right-Aligned | $20      |
-[endcomponent]: # 
+[endcomponent]: #
                 `;
                 cm.replaceSelection(output);
 
@@ -305,31 +307,27 @@ $(document).ready(function(){
 
             @else
 
-            tinymce.init({
+            MailEclipseEditor.init({
+license_key: @json(config('maileclipse.editor_license_key', 'gpl')),
+skin: document.documentElement.dataset.bsTheme === 'dark' ? 'oxide-dark' : 'oxide',
+content_css: document.documentElement.dataset.bsTheme === 'dark' ? 'dark' : 'default',
                 selector: "textarea#template_editor",
                 menubar : false,
                 visual: false,
                 height:600,
                 inline_styles : true,
-                plugins: [
-                     "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-                     "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                     "save table directionality emoticons template paste fullpage code legacyoutput"
-               ],
-               content_css: "css/content.css",
-               toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image fullpage | forecolor backcolor emoticons | preview | code",
-               fullpage_default_encoding: "UTF-8",
-               fullpage_default_doctype: "<!DOCTYPE html>",
+                plugins: "advlist autolink link image lists charmap preview anchor searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons",
+
+               toolbar: "insertfile undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor emoticons | preview | code",
+              _default_encoding: "UTF-8",
+              _default_doctype: "<!DOCTYPE html>",
                init_instance_callback: function (editor)
                {
-                setTimeout(function(){ 
-                    editor.execCommand("mceRepaint");
-                }, 5000);
                }
             });
 
 
-            
+
 
             $('.preview-toggle').click(function(){
                 tinyMCE.execCommand('mcePreview');return false;
@@ -358,7 +356,7 @@ $(document).ready(function(){
                     @if ($skeleton['type'] === 'markdown')
 
                     var postData = {
-                        content: simplemde.codemirror.getValue(), 
+                        content: simplemde.codemirror.getValue(),
                         template_name: templatename,
                         template_description: templatedescription,
                         plain_text: plaintextEditor.getValue(),
@@ -381,7 +379,7 @@ $(document).ready(function(){
 
                     @endif
 
-                    
+
                         axios.post('{{ route('createNewTemplate') }}', postData)
 
                     .then(function (response) {
@@ -400,7 +398,7 @@ $(document).ready(function(){
                     })
 
                     .catch(function (error) {
-                        notie.alert({ type: 'error', text: error, time: 2 })
+                        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
                     });
                   }
 
@@ -421,7 +419,7 @@ $(document).ready(function(){
 
         });
 
-                
+
 </script>
-   
+
 @endsection

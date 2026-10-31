@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ __('Email preview unavailable') }}</title>
+    <link rel="stylesheet" href="{{ asset('vendor/maileclipse/css/maileclipse-app.min.css') }}">
 </head>
 <body>
-
-	<div class="container-fluid mt-3">
-
-		<div class="alert alert-warning" role="alert">
-		    {{ $exception->getMessage() }}
-		</div>
-
-	</div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
+    <main class="container py-4">
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ __('This template needs attention') }}</strong>
+            <p class="me-validation-error mb-0">{{ $errorMessage ?? (isset($exception) ? $exception->getMessage() : __('The preview could not be rendered.')) }}</p>
+        </div>
+    </main>
 </body>
 </html>

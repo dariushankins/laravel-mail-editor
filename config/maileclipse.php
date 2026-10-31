@@ -32,6 +32,16 @@ return [
 
     'factory' => true,
 
+    // Validate each preview independently; bad items never block the workspace.
+    'validate_templates' => true,
+
+    // Constructor parameter values keyed by fully qualified mailable class.
+    // Supply concrete objects for enums, interfaces or application-specific services.
+    'preview_data' => [],
+
+    // Optional TinyMCE commercial license key; self-hosted GPL is the default.
+    'editor_license_key' => env('MAILECLIPSE_EDITOR_LICENSE_KEY', 'gpl'),
+
     /*
     |--------------------------------------------------------------------------
     | Display Mailable Subject
@@ -43,25 +53,6 @@ return [
     |
     */
     'display_as_subject' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relationship loading.
-    |--------------------------------------------------------------------------
-    |
-    | This configures how deep the package will search an load relations.
-    | If you set this to 0, relations will not be loaded.
-    |
-    | relation_depth: off = 0, min = 1, max = 5
-    | model: this is the model to use to exclude methods when searching.
-    |
-    | N.B. This does not configure how many many relationship types are loaded.
-    */
-    'relations' => [
-        'relation_depth' => env('MAILECLIPSE_RELATION_DEPTH', 2),
-
-        'model' => \Illuminate\Foundation\Auth\User::class,
-    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -37,6 +37,9 @@
      </style>
 
 <div class="col-lg-12 col-md-12">
+    @if(($templateData['status'] ?? 'valid') === 'invalid')
+        @include('maileclipse::layout.validation-banner', ['validationError' => $templateData['error']])
+    @endif
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
@@ -51,12 +54,12 @@
                     <div id="accordion">
                       <div class="card">
                         <div class="card-header" id="headingOne">
-                          <h5 class="mb-0 dropdown-toggle" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <h5 class="mb-0 dropdown-toggle" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Details
                           </h5>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                           <div class="card-body">
                             <p style="font-size: .9em;"><b class="font-weight-sixhundred">Mailable:</b> <a href="{{ route('viewMailable', ['name' => $name]) }}">{{ $name }}</a></p>
                             <p style="font-size: .9em;"><b class="font-weight-sixhundred">Namespace:</b> {{ $templateData['namespace'] }}</p>
@@ -69,10 +72,10 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="card mb-2">
                         <div class="card-header p-3" style="border-bottom:1px solid #e7e7e7e6;">
-                            <button type="button" class="btn btn-success float-right save-template">Update</button>
-                            <button type="button" class="btn btn-secondary float-right preview-toggle mr-2"><i class="far fa-eye"></i> Preview</button>
-                            <button type="button" class="btn btn-light mr-2 save-draft disabled">Save Draft</button>
-                            <button type="button" class="btn btn-info float-right mr-2 send-test"><svg fill="#fff" width="20" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <button type="button" class="btn btn-success float-end save-template">Update</button>
+                            <button type="button" class="btn btn-secondary float-end preview-toggle me-2"><i class="far fa-eye"></i> Preview</button>
+                            <button type="button" class="btn btn-light me-2 save-draft disabled">Save Draft</button>
+                            <button type="button" class="btn btn-info float-end me-2 send-test"><svg fill="#fff" width="20" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="m8.75 17.612v4.638c0 .324.208.611.516.713.077.025.156.037.234.037.234 0 .46-.11.604-.306l2.713-3.692z"/>
                                     <path d="m23.685.139c-.23-.163-.532-.185-.782-.054l-22.5 11.75c-.266.139-.423.423-.401.722.023.3.222.556.505.653l6.255 2.138 13.321-11.39-10.308 12.419 10.483 3.583c.078.026.16.04.242.04.136 0 .271-.037.39-.109.19-.116.319-.311.352-.53l2.75-18.5c.041-.28-.077-.558-.307-.722z"/>
                                 </svg> {{ __('Send Test') }}</button>
@@ -83,10 +86,10 @@
 
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Editor</a>
+                        <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Editor</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link {{ !is_null($templateData['text_template']) ? '' : 'disabled' }}" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Plain Text</a>
+                        <a class="nav-link {{ !is_null($templateData['text_template']) ? '' : 'disabled' }}" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Plain Text</a>
                       </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -97,9 +100,9 @@
                         @foreach($templateData['view_data'] as $param)
 
                                @if (isset($param['data']['type']) && $param['data']['type'] === 'model')
-                                    <div class="btn-group dropright">
-                                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" maileclipse-data-toggle="tooltip" data-placement="top" title="Elequent Model">
-                                        <i class="fas fa-database mr-1"></i>{{ $param['key'] }}
+                                    <div class="btn-group dropend">
+                                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" maileclipse-data-toggle="tooltip" data-bs-placement="top" title="Elequent Model">
+                                        <i class="fas fa-database me-1"></i>{{ $param['key'] }}
                                       </button>
                                       <div class="dropdown-menu">
 
@@ -122,31 +125,31 @@
 
                                     @elseif(isset($param['data']['type']) && $param['data']['type'] === 'elequent-collection')
 
-                                        <button type="button" class="btn btn-info btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-placement="top" title="Elequent Collection" param-key="{{ $param['key'] }}">
-                                        <i class="fa fa-table mr-1" aria-hidden="true"></i>{{ $param['key'] }}
+                                        <button type="button" class="btn btn-info btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-bs-placement="top" title="Elequent Collection" param-key="{{ $param['key'] }}">
+                                        <i class="fa fa-table me-1" aria-hidden="true"></i>{{ $param['key'] }}
                                         </button>
 
                                     @elseif(isset($param['data']['type']) && $param['data']['type'] === 'collection')
 
-                                        <button type="button" class="btn btn-success btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-placement="top" title="Collection" param-key="{{ $param['key'] }}">
-                                        <i class="fa fa-table mr-1" aria-hidden="true"></i>{{ $param['key'] }}
+                                        <button type="button" class="btn btn-success btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-bs-placement="top" title="Collection" param-key="{{ $param['key'] }}">
+                                        <i class="fa fa-table me-1" aria-hidden="true"></i>{{ $param['key'] }}
                                         </button>
 
                                     @else
 
-                                        <button type="button" class="btn btn-secondary btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-placement="top" title="Simple Variable" param-key="{{ $param['key'] }}">
-                                        <i class="fa fa-anchor mr-1" aria-hidden="true"></i>{{ $param['key'] }}
+                                        <button type="button" class="btn btn-secondary btn-sm view_data_param" maileclipse-data-toggle="tooltip" data-bs-placement="top" title="Simple Variable" param-key="{{ $param['key'] }}">
+                                        <i class="fa fa-anchor me-1" aria-hidden="true"></i>{{ $param['key'] }}
                                         </button>
 
                                     @endif
 
                             @endforeach
                         </div>
-                        <textarea id="template_editor" cols="30" rows="10">{{ $templateData['template'] }}</textarea>
+                        <textarea aria-label="Email template" id="template_editor" cols="30" rows="10">{{ $templateData['template'] }}</textarea>
                       </div>
                       <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         @if(!is_null($templateData['text_template']))
-                            <textarea id="plain_text" cols="30" rows="10">{{ $templateData['text_template'] }}</textarea>
+                            <textarea aria-label="Plain text email" id="plain_text" cols="30" rows="10">{{ $templateData['text_template'] }}</textarea>
                         @endif
                       </div>
                     </div>
@@ -201,7 +204,7 @@ $(document).ready(function(){
             })
 
             .catch(function (error) {
-                notie.alert({type: 'error', text: error, time: 4})
+                notie.alert({type: 'error', text: error.response?.data?.message || error.message || String(error), time: 4})
             });
     }
 
@@ -211,9 +214,11 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
 
 @if ( $templateData['is_markdown'] )
 
-    var simplemde = new SimpleMDE(
+    var simplemde = new EasyMDE(
         {
         element: $("#template_editor")[0],
+                autoDownloadFontAwesome: false,
+                spellChecker: false,
         toolbar: [
         {
                 name: "bold",
@@ -350,7 +355,7 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
                     name: '{{ $name }}'
                 }
             }).done(function( HtmledTemplate ) {
-                preview.innerHTML = HtmledTemplate;
+                MailEclipseEditor.preview(preview, HtmledTemplate);
             });
 
             return '';
@@ -484,7 +489,7 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
 
     })
     .catch(function (error) {
-        notie.alert({ type: 'error', text: error, time: 2 })
+        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
     });
 
       }
@@ -532,21 +537,19 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
 
         @else
 
-tinymce.init({
+MailEclipseEditor.init({
+license_key: @json(config('maileclipse.editor_license_key', 'gpl')),
+skin: document.documentElement.dataset.bsTheme === 'dark' ? 'oxide-dark' : 'oxide',
+content_css: document.documentElement.dataset.bsTheme === 'dark' ? 'dark' : 'default',
 selector: "textarea#template_editor",
 menubar : false,
 visual: false,
 height:560,
 inline_styles : true,
-plugins: [
-     "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-     "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-     "save table directionality emoticons template paste fullpage code legacyoutput"
-],
-content_css: "css/content.css",
-toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image fullpage | forecolor backcolor emoticons | preview | code",
-fullpage_default_encoding: "UTF-8",
-fullpage_default_doctype: "<!DOCTYPE html>",
+plugins: "advlist autolink link image lists charmap preview anchor searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons",
+
+toolbar: "insertfile undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor emoticons | preview | code",
+
    init_instance_callback: function (editor)
    {
         editor.on('Change', function (e) {
@@ -558,10 +561,6 @@ fullpage_default_doctype: "<!DOCTYPE html>",
         if (localStorage.getItem(templateID) !== null) {
             editor.setContent(localStorage.getItem(templateID));
         }
-
-        setTimeout(function(){
-            editor.execCommand("mceRepaint");
-        }, 2000);
     }
 
 });
@@ -620,7 +619,7 @@ $('.save-template').click(function(){
 
     })
     .catch(function (error) {
-        notie.alert({ type: 'error', text: error, time: 2 })
+        notie.alert({ type: 'error', text: error.response?.data?.message || error.message || String(error), time: 2 })
     });
 
   }
