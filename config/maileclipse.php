@@ -182,13 +182,17 @@ return [
             ],
 
             'mantra' => [
+                'account-verification',
                 'activation',
                 'birthday',
+                'cancellation',
                 'coupon',
+                'password-reset',
                 'progress',
                 'rating',
                 'receipt',
                 'shipped',
+                'subscription-renewal',
                 'update',
                 'welcome',
             ],

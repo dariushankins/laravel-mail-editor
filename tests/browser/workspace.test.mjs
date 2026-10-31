@@ -75,13 +75,25 @@ test('mailables search, theme persistence, creation modal and mobile layout', as
 
 test('template picker Bootstrap tabs and single modal per design work', async () => {
   const page = await pageAt('/maileclipse/templates/new');
-  await page.getByRole('tab', { name: 'Markdown', exact: true }).click();
-  assert.ok(await page.locator('#pills-markdown').isVisible());
-  await page.locator('[data-bs-target="#postmarkModal"]').click();
-  await page.locator('#postmarkModal.show').waitFor();
-  assert.equal(await page.locator('#postmarkModal').count(), 1);
+  await page.locator('[data-bs-target="#selectmantraModal"]').click();
+  await page.locator('#selectmantraModal.show').waitFor();
+  for (const name of ['Account Verification', 'Cancellation', 'Password Reset', 'Receipt', 'Subscription Renewal']) {
+    assert.ok(await page.getByRole('link', { name, exact: true }).isVisible(), `${name} option should be available`);
+  }
+  await page.getByRole('link', { name: 'Password Reset', exact: true }).click();
+  await waitForEditor(page);
+  assert.match(await page.evaluate(() => tinymce.get('template_editor').getContent()), /Reset your password/);
   assert.deepEqual(page.errors, []);
   await page.close();
+
+  const markdownPage = await pageAt('/maileclipse/templates/new');
+  await markdownPage.getByRole('tab', { name: 'Markdown', exact: true }).click();
+  assert.ok(await markdownPage.locator('#pills-markdown').isVisible());
+  await markdownPage.locator('[data-bs-target="#postmarkModal"]').click();
+  await markdownPage.locator('#postmarkModal.show').waitFor();
+  assert.equal(await markdownPage.locator('#postmarkModal').count(), 1);
+  assert.deepEqual(markdownPage.errors, []);
+  await markdownPage.close();
 });
 
 test('HTML editor loads locally and preserves document head and body on round trip', async () => {
@@ -92,6 +104,15 @@ test('HTML editor loads locally and preserves document head and body on round tr
   assert.match(content, /<title>Welcome<\/title>/);
   assert.match(content, /<body style=/);
   assert.match(content, /\{\{ \$intro \}\}/);
+  await page.getByRole('button', { name: 'Side by side' }).click();
+  const livePreview = page.locator('.me-live-preview-frame');
+  await livePreview.waitFor();
+  assert.equal(await livePreview.getAttribute('sandbox'), '');
+  await page.evaluate(() => tinymce.get('template_editor').setContent('<p>Live preview update</p>'));
+  await page.waitForFunction(() => document.querySelector('.me-live-preview-frame')?.srcdoc.includes('Live preview update'));
+  await page.getByRole('button', { name: 'Side by side' }).click();
+  assert.equal(await page.locator('.me-live-preview-frame').count(), 1);
+  assert.equal(await page.locator('.me-live-editor-layout.is-split').count(), 0);
   await page.getByRole('tab', { name: 'Plain Text', exact: true }).click();
   assert.ok(await page.locator('#pills-profile .CodeMirror').isVisible());
   await page.getByRole('tab', { name: 'Editor', exact: true }).click();
@@ -103,10 +124,10 @@ test('HTML editor loads locally and preserves document head and body on round tr
 test('Markdown editor previews email inside an isolated frame', async () => {
   const page = await pageAt('/maileclipse/mailables/edit/template/MarkdownMail');
   await page.waitForFunction(() => document.querySelector('.CodeMirror')?.CodeMirror);
-  await page.locator('.preview-toggle').click();
-  await page.locator('.editor-preview iframe').waitFor();
-  assert.match(await page.locator('.editor-preview iframe').getAttribute('srcdoc'), /Weekly digest/);
-  assert.equal(await page.locator('.editor-preview iframe').getAttribute('sandbox'), '');
+  await page.getByRole('button', { name: 'Side by side' }).click();
+  await page.locator('.editor-preview-side iframe').waitFor();
+  assert.match(await page.locator('.editor-preview-side iframe').getAttribute('srcdoc'), /Weekly digest/);
+  assert.equal(await page.locator('.editor-preview-side iframe').getAttribute('sandbox'), '');
   assert.deepEqual(page.errors, []);
   await page.close();
 });

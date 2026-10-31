@@ -62,11 +62,11 @@
 
 
 <!-- Modal -->
-    <div class="modal fade" id="select{{ $name }}Modal" tabindex="-1" role="dialog" aria-labelledby="selectTemplateModalLabel" aria-hidden="true">
+    <div class="modal fade" id="select{{ $name }}Modal" tabindex="-1" role="dialog" aria-labelledby="select{{ $name }}ModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="selectTemplateModalLabel">{{ ucfirst($name) }}</h5>
+                    <h5 class="modal-title" id="select{{ $name }}ModalLabel">{{ ucfirst($name) }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -75,7 +75,7 @@
                     <p>Select Template:</p>
                     <div class="list-group list-group-flush">
                         @foreach($subskeleton as $skeleton)
-                            <a href="{{ route('newTemplate', ['type' => 'html','name' => $name, 'skeleton' => $skeleton]) }}" class="list-group-item list-group-item-action">{{ $skeleton }}</a>
+                            <a href="{{ route('newTemplate', ['type' => 'html','name' => $name, 'skeleton' => $skeleton]) }}" class="list-group-item list-group-item-action">{{ \Illuminate\Support\Str::headline($skeleton) }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -124,11 +124,11 @@
 
 <!-- Modal -->
 
-    <div class="modal fade" id="{{ $name }}Modal" tabindex="-1" role="dialog" aria-labelledby="selectTemplateModalLabel" aria-hidden="true">
+    <div class="modal fade" id="{{ $name }}Modal" tabindex="-1" role="dialog" aria-labelledby="{{ $name }}ModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="selectTemplateModalLabel">{{ ucfirst($name) }}</h5>
+                    <h5 class="modal-title" id="{{ $name }}ModalLabel">{{ ucfirst($name) }}</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -137,7 +137,7 @@
                     <p>Select Template:</p>
                     <div class="list-group list-group-flush">
                         @foreach($subskeleton as $skeleton)
-                      <a href="{{ route('newTemplate', ['type' => 'markdown','name' => $name, 'skeleton' => $skeleton]) }}" class="list-group-item list-group-item-action">{{ $skeleton }}</a>
+                      <a href="{{ route('newTemplate', ['type' => 'markdown','name' => $name, 'skeleton' => $skeleton]) }}" class="list-group-item list-group-item-action">{{ \Illuminate\Support\Str::headline($skeleton) }}</a>
                       @endforeach
                     </div>
                 </div>

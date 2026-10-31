@@ -73,6 +73,7 @@
                     <div class="card mb-2">
                         <div class="card-header p-3" style="border-bottom:1px solid #e7e7e7e6;">
                             <button type="button" class="btn btn-success float-end save-template">Update</button>
+                            <button type="button" class="btn btn-secondary float-end side-by-side-toggle me-2" aria-pressed="false"><i class="fas fa-columns me-1" aria-hidden="true"></i> Side by side</button>
                             <button type="button" class="btn btn-secondary float-end preview-toggle me-2"><i class="far fa-eye"></i> Preview</button>
                             <button type="button" class="btn btn-light me-2 save-draft disabled">Save Draft</button>
                             <button type="button" class="btn btn-info float-end me-2 send-test"><svg fill="#fff" width="20" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -279,7 +280,7 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
         {
                 name: "image",
                 action: SimpleMDE.drawImage,
-                className: "fa fa-picture-o",
+                className: "fa-solid fa-image",
                 title: "Insert Image",
         },
         /*{
@@ -298,7 +299,7 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
         {
             name: "button-component",
             action: setButtonComponent,
-            className: "fa fa-hand-pointer-o",
+            className: "fa-solid fa-hand-pointer",
             title: "Button Component",
         },
         {
@@ -434,6 +435,11 @@ var templateID = "template_view_{{ $name }}_{{ $templateData['template_name'] }}
         $(this).toggleClass('active');
     });
 
+    $('.side-by-side-toggle').click(function(){
+        simplemde.toggleSideBySide();
+        $(this).attr('aria-pressed', String(simplemde.isSideBySideActive()));
+    });
+
     simplemde.codemirror.on("change", function(){
         if ($('.save-draft').hasClass('disabled')){
             $('.save-draft').removeClass('disabled').text('Save Draft');
@@ -561,6 +567,8 @@ toolbar: "insertfile undo redo | blocks | bold italic | alignleft aligncenter al
         if (localStorage.getItem(templateID) !== null) {
             editor.setContent(localStorage.getItem(templateID));
         }
+
+        MailEclipseEditor.enableSideBySide(editor, document.querySelector('.side-by-side-toggle'));
     }
 
 });

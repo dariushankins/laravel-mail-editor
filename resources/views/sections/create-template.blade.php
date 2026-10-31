@@ -53,6 +53,7 @@
                     <div class="card mb-2">
                         <div class="card-header p-3" style="border-bottom:1px solid #e7e7e7e6;">
                             <button type="button" class="btn btn-primary float-end save-template">Create</button>
+                            <button type="button" class="btn btn-secondary float-end side-by-side-toggle me-2" aria-pressed="false"><i class="fas fa-columns me-1" aria-hidden="true"></i> Side by side</button>
                             <button type="button" class="btn btn-secondary float-end preview-toggle me-2"><i class="far fa-eye"></i> Preview</button>
                         </div>
                     </div>
@@ -156,7 +157,7 @@ $(document).ready(function(){
                 {
                         name: "image",
                         action: SimpleMDE.drawImage,
-                        className: "fa fa-picture-o",
+                        className: "fa-solid fa-image",
                         title: "Insert Image",
                 },
                 {
@@ -169,7 +170,7 @@ $(document).ready(function(){
                 {
                     name: "button-component",
                     action: setButtonComponent,
-                    className: "fa fa-hand-pointer-o",
+                    className: "fa-solid fa-hand-pointer",
                     title: "Button Component",
                 },
                 {
@@ -305,6 +306,11 @@ $(document).ready(function(){
                 $(this).toggleClass('active');
             });
 
+            $('.side-by-side-toggle').click(function(){
+                simplemde.toggleSideBySide();
+                $(this).attr('aria-pressed', String(simplemde.isSideBySideActive()));
+            });
+
             @else
 
             MailEclipseEditor.init({
@@ -323,6 +329,7 @@ content_css: document.documentElement.dataset.bsTheme === 'dark' ? 'dark' : 'def
               _default_doctype: "<!DOCTYPE html>",
                init_instance_callback: function (editor)
                {
+                    MailEclipseEditor.enableSideBySide(editor, document.querySelector('.side-by-side-toggle'));
                }
             });
 
