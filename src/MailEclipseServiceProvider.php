@@ -1,10 +1,10 @@
 <?php
 
-namespace Qoraiche\MailEclipse;
+namespace Dariushankins\MailEclipse;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Qoraiche\MailEclipse\Command\VendorPublishCommand;
+use Dariushankins\MailEclipse\Command\VendorPublishCommand;
 
 class MailEclipseServiceProvider extends ServiceProvider
 {

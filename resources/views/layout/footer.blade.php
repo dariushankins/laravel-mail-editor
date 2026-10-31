@@ -1,4 +1,4 @@
 <footer class="me-footer">
     <span>MailEclipse · {{ __('Made for thoughtful emails') }}</span>
-    <span>&copy; {{ date('Y') }} · {{ __('Originally created by Yassine Qoraiche') }}</span>
+    <span>&copy; {{ date('Y') }} · {{ __('Originally created by Yassine Dariushankins') }}</span>
 </footer>

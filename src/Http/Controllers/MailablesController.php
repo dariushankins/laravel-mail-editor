@@ -1,11 +1,11 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Http\Controllers;
+namespace Dariushankins\MailEclipse\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Qoraiche\MailEclipse\Facades\MailEclipse;
+use Dariushankins\MailEclipse\Facades\MailEclipse;
 
 class MailablesController extends Controller
 {
@@ -98,7 +98,7 @@ class MailablesController extends Controller
     {
         $request->validate(['mailablename' => ['required', 'string', 'regex:/^[A-Za-z_][A-Za-z0-9_]*$/']]);
 
-        return response()->json((new \Qoraiche\MailEclipse\Actions\DeleteMailable)->handle($request->only('mailablename')));
+        return response()->json((new \Dariushankins\MailEclipse\Actions\DeleteMailable)->handle($request->only('mailablename')));
     }
 
     public function sendTest(Request $request)

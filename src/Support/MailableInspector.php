@@ -1,12 +1,12 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Support;
+namespace Dariushankins\MailEclipse\Support;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Qoraiche\MailEclipse\MailEclipse;
+use Dariushankins\MailEclipse\MailEclipse;
 use ReflectionClass;
 use Throwable;
 

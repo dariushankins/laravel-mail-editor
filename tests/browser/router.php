@@ -33,8 +33,8 @@ $app['config']->set('session.driver', 'file');
 $app['config']->set('mail.default', 'array');
 $app['config']->set('app.debug', true);
 
-\Illuminate\Foundation\AliasLoader::getInstance()->alias('MailEclipse', \Qoraiche\MailEclipse\Facades\MailEclipse::class);
-$app->register(\Qoraiche\MailEclipse\MailEclipseServiceProvider::class);
+\Illuminate\Foundation\AliasLoader::getInstance()->alias('MailEclipse', \Dariushankins\MailEclipse\Facades\MailEclipse::class);
+$app->register(\Dariushankins\MailEclipse\MailEclipseServiceProvider::class);
 $app['config']->set('maileclipse.mailables_dir', $data.'/Mail/');
 $app['config']->set('maileclipse.allowed_environments', [$app->environment()]);
 $app['view']->addNamespace('fixture', $data.'/resources/views/fixture');

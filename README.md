@@ -1,6 +1,6 @@
 # MailEclipse — Laravel Mail Editor
 
-A modern email workspace for **Laravel 12 and 13**, with **PHP 8.4 or newer**. This is a modernization of [Yassine Qoraiche's MailEclipse](https://github.com/Qoraiche/laravel-mail-editor), retaining its PHP namespace, configuration keys, facade, and named routes.
+A modern email workspace for **Laravel 12 and 13**, with **PHP 8.4 or newer**. This modernizes MailEclipse under the Dariushankins PHP namespace while retaining its configuration keys, facade, and named routes.
 
 ## What's new
 
@@ -27,7 +27,7 @@ Until a release is published on Packagist, add this fork as a Composer VCS repos
 ```
 
 ```bash
-composer require qoraiche/laravel-mail-editor:dev-modernize-laravel-13
+composer require dariushankins/laravel-mail-editor
 php artisan laravel-mail-editor:install
 ```
 
@@ -88,4 +88,4 @@ Laravel 9/10 and PHP 8.3 and older should continue using the appropriate upstrea
 
 ## Credits
 
-Originally created by [Yassine Qoraiche](https://github.com/Qoraiche), with contributions from the upstream community.
+Maintained by [Dariushankins](https://github.com/Dariushankins), with contributions from the upstream community.

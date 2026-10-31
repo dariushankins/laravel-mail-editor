@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Utils;
+namespace Dariushankins\MailEclipse\Utils;
 
 class Replacer
 {

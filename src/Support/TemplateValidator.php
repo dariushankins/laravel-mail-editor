@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Support;
+namespace Dariushankins\MailEclipse\Support;
 
 use Illuminate\Support\Facades\Blade;
 use PhpToken;

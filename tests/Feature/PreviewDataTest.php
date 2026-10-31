@@ -1,12 +1,12 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Tests\Feature;
+namespace Dariushankins\MailEclipse\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Qoraiche\MailEclipse\Support\MailableResolver;
-use Qoraiche\MailEclipse\Tests\TestCase;
+use Dariushankins\MailEclipse\Support\MailableResolver;
+use Dariushankins\MailEclipse\Tests\TestCase;
 
 class PreviewModel extends Model
 {

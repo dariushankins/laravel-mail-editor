@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Actions;
+namespace Dariushankins\MailEclipse\Actions;
 
 use Illuminate\Support\Facades\File;
 

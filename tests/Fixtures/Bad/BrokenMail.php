@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Tests\Fixtures\Bad;
+namespace Dariushankins\MailEclipse\Tests\Fixtures\Bad;
 
 use Illuminate\Mail\Mailable;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Support;
+namespace Dariushankins\MailEclipse\Support;
 
 use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;

@@ -25,8 +25,8 @@ All notable changes to `laravel-mail-editor` will be documented in this file.
 ## Version 1.0.2
 
 - remove unwanted routes
-- fix mailable with multiple constructor args type error ([issue](https://github.com/Qoraiche/laravel-mail-editor/issues/1)).
-- Replace route closure with controller based route ([issue](https://github.com/Qoraiche/laravel-mail-editor/issues/2)).
+- fix mailable with multiple constructor args type error ([issue](https://github.com/Dariushankins/laravel-mail-editor/issues/1)).
+- Replace route closure with controller based route ([issue](https://github.com/Dariushankins/laravel-mail-editor/issues/2)).
 - other minor fixes.
 
 ## Version 1.1.0
@@ -192,7 +192,7 @@ Laravel 8 Support release
 ## Changes
 
 - Supports only Laravel v8
-- See [#108](https://github.com/Qoraiche/laravel-mail-editor/pull/108)
+- See [#108](https://github.com/Dariushankins/laravel-mail-editor/pull/108)
 - PSR Classnames #112, thank you @yogendra-revanna
 
 ## Potential Breaking Change
@@ -204,7 +204,7 @@ The name spaces of the package now use PSR classname standards, if you were refe
 This release will resolve the issue that has been brought up in issue #63 where relations weren't being loaded and affected the calling of relations inside emails or mailables.
 
 ## Fixes
-- Fixes issue [#63](https://github.com/Qoraiche/laravel-mail-editor/issues/63)
+- Fixes issue [#63](https://github.com/Dariushankins/laravel-mail-editor/issues/63)
 
 ## Addition
 - Discovery and loading of relations that have factories
@@ -234,7 +234,7 @@ This release will resolve the issue that has been brought up in issue #63 where 
 
 ### Fixes 
 
-- Fixes issue where package would try to search for `string` type of a parameter and fail. [#178](https://github.com/Qoraiche/laravel-mail-editor/issues/178)
+- Fixes issue where package would try to search for `string` type of a parameter and fail. [#178](https://github.com/Dariushankins/laravel-mail-editor/issues/178)
 
 ## Version 3.5.0
 
@@ -268,7 +268,7 @@ New Structure:
 ```
 ### Fixes
 
-- Fixes [#168](https://github.com/Qoraiche/laravel-mail-editor/issues/168)
+- Fixes [#168](https://github.com/Dariushankins/laravel-mail-editor/issues/168)
 
 ## Version 3.5.1
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse;
+namespace Dariushankins\MailEclipse;
 
 class MailEclipseMailables
 {

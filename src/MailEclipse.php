@@ -1,6 +1,6 @@
 <?php
 
-namespace Qoraiche\MailEclipse;
+namespace Dariushankins\MailEclipse;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Mail\Markdown;
@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use Qoraiche\MailEclipse\Utils\Replacer;
-use Qoraiche\MailEclipse\Support\MailableResolver;
+use Dariushankins\MailEclipse\Utils\Replacer;
+use Dariushankins\MailEclipse\Support\MailableResolver;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -269,7 +269,7 @@ class MailEclipse
             }
             try {
                 $path = View::make(self::VIEW_NAMESPACE.'::templates.'.$record->template_slug)->getPath();
-                $error = app(\Qoraiche\MailEclipse\Support\TemplateValidator::class)->validate(file_get_contents($path));
+                $error = app(\Dariushankins\MailEclipse\Support\TemplateValidator::class)->validate(file_get_contents($path));
                 if ($error !== null) { $record->status = 'invalid'; $record->error = $error; }
             } catch (\Throwable $error) {
                 $record->status = 'invalid';
@@ -302,7 +302,7 @@ class MailEclipse
             ]);
         }
 
-        $error = app(\Qoraiche\MailEclipse\Support\TemplateValidator::class)->validate(Replacer::toBlade($request->content));
+        $error = app(\Dariushankins\MailEclipse\Support\TemplateValidator::class)->validate(Replacer::toBlade($request->content));
         abort_if($error !== null, 422, 'Invalid template: '.$error);
         $view = self::VIEW_NAMESPACE.'::templates.'.$request->template_name;
         $templateName = Str::camel(preg_replace('/\s+/', '_', $request->template_name));
@@ -364,7 +364,7 @@ class MailEclipse
             return $replaced;
         }
 
-        $error = app(\Qoraiche\MailEclipse\Support\TemplateValidator::class)->validate($replaced);
+        $error = app(\Dariushankins\MailEclipse\Support\TemplateValidator::class)->validate($replaced);
         abort_if($error !== null, 422, 'Invalid template: '.$error);
         $resolved = realpath($viewPath);
         $root = realpath(resource_path('views'));
@@ -525,7 +525,7 @@ class MailEclipse
      */
     protected static function mailablesList()
     {
-        return app(\Qoraiche\MailEclipse\Support\MailableInspector::class)->all();
+        return app(\Dariushankins\MailEclipse\Support\MailableInspector::class)->all();
     }
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Http\Controllers;
+namespace Dariushankins\MailEclipse\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Qoraiche\MailEclipse\Facades\MailEclipse;
-use Qoraiche\MailEclipse\Utils\TemplateSkeletons;
+use Dariushankins\MailEclipse\Facades\MailEclipse;
+use Dariushankins\MailEclipse\Utils\TemplateSkeletons;
 
 class TemplatesController extends Controller
 {
@@ -25,7 +25,7 @@ class TemplatesController extends Controller
 
         $templates = MailEclipse::getTemplates();
 
-        return View(MailEclipse::VIEW_NAMESPACE.'::sections.templates', ['skeletons' => $skeletons, 'templates' => $templates, 'templateIndexError' => \Qoraiche\MailEclipse\MailEclipse::$templateIndexError]);
+        return View(MailEclipse::VIEW_NAMESPACE.'::sections.templates', ['skeletons' => $skeletons, 'templates' => $templates, 'templateIndexError' => \Dariushankins\MailEclipse\MailEclipse::$templateIndexError]);
     }
 
     public function new($type, $name, $skeleton)

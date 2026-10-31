@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Qoraiche\MailEclipse\Http\Controllers\TemplatesController;
-use Qoraiche\MailEclipse\Http\Controllers\MailablesPreviewController;
-use Qoraiche\MailEclipse\Http\Controllers\MailablesController;
+use Dariushankins\MailEclipse\Http\Controllers\TemplatesController;
+use Dariushankins\MailEclipse\Http\Controllers\MailablesPreviewController;
+use Dariushankins\MailEclipse\Http\Controllers\MailablesController;
 
 Route::get('/', [MailablesController::class, 'toMailablesList']);
 

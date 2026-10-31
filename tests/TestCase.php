@@ -1,9 +1,9 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Tests;
+namespace Dariushankins\MailEclipse\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Qoraiche\MailEclipse\MailEclipseServiceProvider;
+use Dariushankins\MailEclipse\MailEclipseServiceProvider;
 
 class TestCase extends Orchestra
 {

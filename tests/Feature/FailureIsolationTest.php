@@ -1,12 +1,12 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Tests\Feature;
+namespace Dariushankins\MailEclipse\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Qoraiche\MailEclipse\MailEclipse;
-use Qoraiche\MailEclipse\Support\TemplateValidator;
-use Qoraiche\MailEclipse\Tests\TestCase;
+use Dariushankins\MailEclipse\MailEclipse;
+use Dariushankins\MailEclipse\Support\TemplateValidator;
+use Dariushankins\MailEclipse\Tests\TestCase;
 
 class FailureIsolationTest extends TestCase
 {

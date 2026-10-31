@@ -1,9 +1,9 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Http\Exceptions;
+namespace Dariushankins\MailEclipse\Http\Exceptions;
 
 use Exception;
-use Qoraiche\MailEclipse\Facades\MailEclipse;
+use Dariushankins\MailEclipse\Facades\MailEclipse;
 
 class PreviewErrorException extends Exception
 {

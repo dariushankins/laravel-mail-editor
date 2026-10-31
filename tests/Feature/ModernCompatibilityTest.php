@@ -1,14 +1,14 @@
 <?php
 
-namespace Qoraiche\MailEclipse\Tests\Feature;
+namespace Dariushankins\MailEclipse\Tests\Feature;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Qoraiche\MailEclipse\MailEclipse;
-use Qoraiche\MailEclipse\MailEclipseMailables;
-use Qoraiche\MailEclipse\Tests\Fixtures\Mail\ModernMail;
-use Qoraiche\MailEclipse\Tests\Fixtures\Mail\LegacyMail;
-use Qoraiche\MailEclipse\Tests\TestCase;
+use Dariushankins\MailEclipse\MailEclipse;
+use Dariushankins\MailEclipse\MailEclipseMailables;
+use Dariushankins\MailEclipse\Tests\Fixtures\Mail\ModernMail;
+use Dariushankins\MailEclipse\Tests\Fixtures\Mail\LegacyMail;
+use Dariushankins\MailEclipse\Tests\TestCase;
 
 class ModernCompatibilityTest extends TestCase
 {
@@ -35,7 +35,7 @@ class ModernCompatibilityTest extends TestCase
         $source = file_get_contents(__DIR__.'/../Fixtures/views/markdown.blade.php');
         $this->post('/maileclipse/mailables/preview/template', [
             'markdown' => $source, 'name' => 'MarkdownMail',
-            'namespace' => \Qoraiche\MailEclipse\Tests\Fixtures\Mail\MarkdownMail::class,
+            'namespace' => \Dariushankins\MailEclipse\Tests\Fixtures\Mail\MarkdownMail::class,
         ])->assertOk()->assertSee('Weekly digest');
     }
 
